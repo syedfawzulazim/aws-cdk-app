@@ -18,8 +18,9 @@ class L3Bucket extends Construct {
 }
 
 
-
 export class AwsCdkAppStack extends cdk.Stack {
+  public readonly photoBucketArn: string;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -67,6 +68,11 @@ export class AwsCdkAppStack extends cdk.Stack {
       exportName: 'L2BucketName'
     });
 
+    const PhotosBucket = new Bucket(this, 'PhotosBucket', {
+      bucketName: `photos-bucket-${cdk.Aws.ACCOUNT_ID}-${cdk.Aws.REGION}`,
+    });
+
+    this.photoBucketArn = PhotosBucket.bucketArn;
    
 
   }
